@@ -1,5 +1,8 @@
 # BadUi
 
+## TO RUN
+Download project, open terminal in folder. type in npm run start. Navigate to localhost:4200 and enjoy
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.14.
 
 ## Development server
