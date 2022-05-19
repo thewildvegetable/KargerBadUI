@@ -1,0 +1,132 @@
+
+<div id="resume-title">
+    <h1>
+        Submit Your Resum&eacute;
+    </h1>
+</div>
+<div id="resume-inputs">
+    <div id="resume-name">
+        <br />
+        <label for="firstName">First Name:</label>
+        <input type="text" name="firstName" [formControl]="firstName" (keydown)="randomLetter()"/>
+        <br />
+        <br />
+        <label for="lastName">Last Name:</label>
+        <button name="lastName" (click)="lastNameModal()" class="inputButton">{{ lastName.value }}</button>
+    </div>
+    <div id="resume-dob">
+        <br />
+        <br />
+        <label>Date of Birth:</label>
+        <br />
+        <label for="month">Month:</label>
+        <input type="text" name="month" [formControl]="month" placeholder="Month Should Be Written Out" (click)="randomMonth()" (focus)="randomMonth()"/>
+        <br />
+        <br *ngIf="this.month.hasError('invalid')"  />
+        <div *ngIf="this.month.hasError('invalid')" class="error">Please write out the full month</div>
+        <label for="day">Day:</label>
+        <input type="range" min="1" max="31" value="12" name="day" [formControl]="day" class="daySlider"> {{day.value}}
+        <br />
+        <label for="year">Year:</label>
+        <input type="range" min="1" max="100000" value="50" name="year" [formControl]="year" class="yearSlider"> {{year.value}}
+        <br *ngIf="this.year.hasError('invalid')"/>
+        <div *ngIf="this.year.hasError('invalid')" class="error">Choose a year that someone alive could be born in</div>
+    </div>
+    <div id="resume-email">
+        <br />
+        <br />
+        <label for="email">Email:</label>
+        <input type="text" name="email" [formControl]="email" placeholder="Email Here"/>
+        <br *ngIf="this.email.hasError('invalid')" />
+        <div *ngIf="this.email.hasError('invalid')" class="error">Use a real email service</div>
+    </div>
+    <div id="resume-phone">
+        <br />
+        <br />
+        <label for="area">Area Code:</label>
+        <input type="tel" name="area" [formControl]="areaCodeOne" placeholder="0" (keyup)="updateAreaCode()"/> - 
+        <input type="tel" name="area" [formControl]="areaCodeTwo" placeholder="0" (keyup)="updateAreaCode()"/>
+        = {{ areaCode }}
+        <br *ngIf="this.invalidAreaCode || this.areaCodeTwo.hasError('invalid')"/>
+        <div *ngIf="this.areaCodeTwo.hasError('invalid')" class="error">Equation can not be a subtraction of 0 or 1</div>
+        <div *ngIf="this.invalidAreaCode" class="error">Invalid Area Code, Area Codes must contain exactly 3 digits</div>
+        <br/>
+        <label for="phone">Phone Number:</label>
+        <input type="number" name="phone" [formControl]="phone" (keydown)="randomNumber()"/>
+    </div>
+    <div id="resume-address">
+        <br />
+        <br />
+        <label>Address:</label>
+        <br />
+        <label for="address">Street Address 1:</label>
+        <input type="text" name="address" [formControl]="street" class="streetAddress" />
+        <br/>
+        <label for="streetSecond">Street Address 2:</label>
+        <input type="text" name="streetSecond" [formControl]="streetSecond" />
+        <br *ngIf="this.streetSecond.hasError('invalid')"/>
+        <div *ngIf="this.streetSecond.hasError('invalid')" class="error">Enter a valid apartment or unit number</div>
+        <br/>
+        <label for="city">City:</label>
+        <input type="text" name="city" [formControl]="city" placeholder="City" (blur)="cityInteraction()"/>
+        <br />
+        <label for="state">State:</label>
+        <input type="text" name="state" [formControl]="state" placeholder="State"/>
+        <br />
+        <label for="country">Country:</label>
+        <button type="button" name="country" (click)="randomCountry()" class="inputButton">{{ country.value }}</button>
+        <br />
+        <label for="zip">Zip Code:</label>
+        <input type="text" name="zip" [formControl]="zip" placeholder="Zip"/>
+        <br *ngIf="this.zip.hasError('invalid')"/>
+        <div *ngIf="this.zip.hasError('invalid')" class="error">Zip codes must be written out in letters</div>
+    </div>
+    <div id="resume-description">
+        <br />
+        <br />
+        <label for="description">Why should we consider you for this position?</label>
+        <br />
+        <textarea cols="50" rows="15" maxlength="500" name="description" [formControl]="resume"></textarea>
+        <div *ngIf="this.resume.hasError('invalid')" class="error">Invalid Reason, please provide a real valid reason for us to hire you</div>
+    </div>
+    <div id="resume-submit">
+        <br />
+        <br />
+        <button id="clear" (click)="Clear()" class="clearButton"></button>
+        <button (click)="OnSubmit()" class="submitButton">Submit</button>
+    </div>
+    <div id="error-list">
+        <br />
+        <br />
+        <div *ngIf="displayErrors" class="error">
+            The following fields have errors that need to be fixed:
+            <br />
+            <br *ngIf="this.firstName.value === ''"/>
+            <div *ngIf="this.firstName.value === ''">First Name</div>
+            <br *ngIf="this.lastName.value"/>
+            <div *ngIf="this.lastName.value">Last Name</div>
+            <br *ngIf="this.month.value === ''"/>
+            <div *ngIf="this.month.value === ''">Month</div>
+            <br *ngIf="this.day.value === ''"/>
+            <div *ngIf="this.day.value === ''">Day</div>
+            <br *ngIf="this.year.value === ''"/>
+            <div *ngIf="this.year.value === ''">Year</div>
+            <br *ngIf="this.email.value === ''"/>
+            <div *ngIf="this.email.value === ''">Email</div>
+            <br *ngIf="this.areaCodeOne.value === '' || this.areaCodeTwo.value === ''"/>
+            <div *ngIf="this.areaCodeOne.value === '' || this.areaCodeTwo.value === ''">Area Code</div>
+            <br *ngIf="this.phone.value === ''"/>
+            <div *ngIf="this.phone.value === ''">Phone</div>
+            <br *ngIf="this.street.value === ''"/>
+            <div *ngIf="this.street.value === ''">Street Address 1</div>
+            <br *ngIf="this.city.value === ''"/>
+            <div *ngIf="this.city.value === ''">City</div>
+            <br *ngIf="this.state.value === ''"/>
+            <div *ngIf="this.state.value === ''">State</div>
+            <br *ngIf="this.country.value === 'Country'"/>
+            <div *ngIf="this.country.value === 'Country'">Country</div>
+            <br *ngIf="this.zip.value === ''"/>
+            <div *ngIf="this.zip.value === ''">Zip Code</div>
+        </div>
+    </div>
+</div>
